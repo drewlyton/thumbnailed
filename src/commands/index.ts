@@ -1,3 +1,3 @@
-import Ping from './thumbnailed'
+import Thumbailed from './thumbnailed'
 
-export const Commands = [Ping]
+export const Commands = [Thumbailed]
