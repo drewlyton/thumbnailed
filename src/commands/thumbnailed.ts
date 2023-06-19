@@ -47,7 +47,7 @@ async function execute(interaction: CommandInteraction) {
     content: `Here's your thumbnail, ${interaction.user}!`,
     files: [
       new AttachmentBuilder(generatedImage, {
-        name: `${interaction.user.username}-thumbnail-${Date.now()}`,
+        name: `${interaction.user.username}-thumbnail-${Date.now()}.png`,
       }),
     ],
   })

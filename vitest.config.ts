@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     globals: true,
-    exclude: ['./node_modules'],
+    exclude: ['./node_modules', './dist'],
     watchExclude: ['.*\\/node_modules\\/.*', '.*\\/build\\/.*'],
     setupFiles: ['./src/test/setup'],
   },
