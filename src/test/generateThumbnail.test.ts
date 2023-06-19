@@ -12,9 +12,9 @@ it('should generate thumbnail', async () => {
     'http://mockserver.com/thumbnail.png',
     'http://mockserver.com/profile.jpeg'
   )
-  fs.writeFileSync(path.resolve(__dirname, '../test/test-image.jpg'), thumbnail)
+  fs.writeFileSync(path.resolve(__dirname, './test-image.png'), thumbnail)
 
   expect(
-    fs.readFileSync(path.resolve(__dirname, '../test/test-image.jpg'))
-  ).toMatchImageSnapshot()
+    fs.readFileSync(path.resolve(__dirname, './test-image.png'))
+  ).toMatchImageSnapshot({ runInProcess: true })
 })

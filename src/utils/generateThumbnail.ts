@@ -52,7 +52,7 @@ export async function generateThumbnail(
   context.fillText(name, 60, sectionPadding + 13 + 5)
   context.fillText('467K views • 2 days ago', 60, sectionPadding + 20 + 13 + 5)
 
-  return await canvas.encode('jpeg')
+  return await canvas.encode('png')
 }
 export const titleStyle = '600 15px sans-serif'
 const captionStyle = '13px sans-serif'

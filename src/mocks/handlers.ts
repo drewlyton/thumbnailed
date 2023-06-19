@@ -6,7 +6,7 @@ export const handlers = [
   // Handles a GET /user request
   rest.get('http://mockserver.com/thumbnail.png', (req, res, ctx) => {
     const imageBuffer = fs.readFileSync(
-      path.resolve(__dirname, '../test/thumbnail.png')
+      path.resolve(__dirname, '../test/stubs/thumbnail.png')
     )
     return res(
       ctx.set('Content-Length', imageBuffer.byteLength.toString()),
@@ -18,7 +18,7 @@ export const handlers = [
 
   rest.get('http://mockserver.com/profile.jpeg', (req, res, ctx) => {
     const imageBuffer = fs.readFileSync(
-      path.resolve(__dirname, '../test/profile.jpeg')
+      path.resolve(__dirname, '../test/stubs/profile.jpeg')
     )
     return res(
       ctx.set('Content-Length', imageBuffer.byteLength.toString()),
