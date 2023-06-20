@@ -78,7 +78,7 @@ jobs:
           useLockFile: false
 
       - name: ⚡ Run vitest
-        run: npm run test
+        run: npm run test -- -u
 
   build:
     name: 🐳 Build
