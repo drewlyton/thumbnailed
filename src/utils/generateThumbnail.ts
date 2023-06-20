@@ -60,9 +60,24 @@ export async function generateThumbnail(
   let sectionPadding = 248
   if (secondLine !== '') sectionPadding += 26
   context.fillText(name, 60, sectionPadding + 13 + 5)
-  context.fillText('467K views • 2 days ago', 60, sectionPadding + 20 + 13 + 5)
+  context.fillText(
+    `${randomNumber(10, 400)}K views • ${randomNumber(
+      2,
+      10
+    )} ${daysOrHours()} ago`,
+    60,
+    sectionPadding + 20 + 13 + 5
+  )
 
   return await canvas.encode('png')
 }
 export const titleStyle = '600 15px Title'
 const captionStyle = '13px Caption'
+
+function randomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min)) + min
+}
+
+function daysOrHours() {
+  return Math.round(Math.random()) ? 'days' : 'hours'
+}
