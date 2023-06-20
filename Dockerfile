@@ -1,7 +1,7 @@
 # base node image
 FROM node:18-bullseye-slim as base
 
-COPY /fonts ./usr/local/share/fonts
+COPY /fonts ./usr/share/fonts/truetype
 RUN apt-get update; apt-get install -y fontconfig
 RUN fc-cache -f -v
 
