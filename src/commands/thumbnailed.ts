@@ -6,9 +6,12 @@ import {
 } from 'discord.js'
 import { Command } from './Command'
 import { generateThumbnail } from '../utils/generateThumbnail'
+import { getEnv } from '../getEnv'
 
 const data = new SlashCommandBuilder()
-  .setName('thumbailed')
+  .setName(
+    getEnv().NODE_ENV === 'production' ? 'thumbailed' : 'thumbnailed-dev'
+  )
   .setDescription('Replies with a mockup of your title and thumbnail')
   .addStringOption(option =>
     option.setName('title').setDescription('The video title').setRequired(true)

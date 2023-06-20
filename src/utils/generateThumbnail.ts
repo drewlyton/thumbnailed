@@ -1,4 +1,4 @@
-import { Canvas, Path2D, loadImage } from '@napi-rs/canvas'
+import { Canvas, Path2D, loadImage, GlobalFonts } from '@napi-rs/canvas'
 import { getTruncatedTitleLines } from './getTruncatedTitleLines'
 
 export async function generateThumbnail(
@@ -7,6 +7,12 @@ export async function generateThumbnail(
   thumbnailUrl: string,
   avatarUrl: string
 ) {
+  GlobalFonts.registerFromPath('../../fonts/Roboto/Roboto-Bold.ttf', 'Title')
+  GlobalFonts.registerFromPath(
+    '../../fonts/Roboto/Roboto-Medium.ttf',
+    'Caption'
+  )
+
   // Initialize canvas and set background color
   const canvas = new Canvas(388, 344)
   const context = canvas.getContext('2d')
@@ -54,5 +60,5 @@ export async function generateThumbnail(
 
   return await canvas.encode('png')
 }
-export const titleStyle = '600 15px sans-serif'
-const captionStyle = '13px sans-serif'
+export const titleStyle = '600 15px Title'
+const captionStyle = '13px Caption'
