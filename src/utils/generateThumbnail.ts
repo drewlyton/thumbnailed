@@ -1,6 +1,7 @@
 import { Canvas, Path2D, loadImage, GlobalFonts } from '@napi-rs/canvas'
 import { getTruncatedTitleLines } from './getTruncatedTitleLines'
 import { join } from 'path'
+import { randomNumber, daysOrHours } from './randomNumber'
 
 export async function generateThumbnail(
   title: string,
@@ -73,11 +74,3 @@ export async function generateThumbnail(
 }
 export const titleStyle = '600 15px Title'
 const captionStyle = '13px Caption'
-
-function randomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min)) + min
-}
-
-function daysOrHours() {
-  return Math.round(Math.random()) ? 'days' : 'hours'
-}
