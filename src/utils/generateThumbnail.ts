@@ -1,5 +1,6 @@
 import { Canvas, Path2D, loadImage, GlobalFonts } from '@napi-rs/canvas'
 import { getTruncatedTitleLines } from './getTruncatedTitleLines'
+import { join } from 'path'
 
 export async function generateThumbnail(
   title: string,
@@ -7,9 +8,12 @@ export async function generateThumbnail(
   thumbnailUrl: string,
   avatarUrl: string
 ) {
-  GlobalFonts.registerFromPath('../../fonts/Roboto/Roboto-Bold.ttf', 'Title')
   GlobalFonts.registerFromPath(
-    '../../fonts/Roboto/Roboto-Medium.ttf',
+    join(__dirname, '../../fonts/Roboto/Roboto-Bold.ttf'),
+    'Title'
+  )
+  GlobalFonts.registerFromPath(
+    join(__dirname, '../../fonts/Roboto/Roboto-Medium.ttf'),
     'Caption'
   )
 
