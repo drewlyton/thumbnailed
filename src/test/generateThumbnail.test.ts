@@ -7,11 +7,8 @@ import { toMatchImageSnapshot } from 'jest-image-snapshot'
 expect.extend({ toMatchImageSnapshot })
 
 it('should generate thumbnail', async () => {
-  const daysSpy = vi.spyOn(randomizer, 'daysOrHours')
-  daysSpy.mockImplementation(() => 'days')
-
-  const viewSpy = vi.spyOn(randomizer, 'randomNumber')
-  viewSpy.mockImplementation(() => 400)
+  vi.spyOn(randomizer, 'daysOrHours').mockImplementation(() => 'days')
+  vi.spyOn(randomizer, 'randomNumber').mockImplementation(() => 400)
 
   const thumbnail = await generateThumbnail(
     'This is a really really long title that should take up TWO lines and be truncated',
