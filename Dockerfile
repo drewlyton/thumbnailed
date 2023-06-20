@@ -1,6 +1,10 @@
 # base node image
 FROM node:18-bullseye-slim as base
 
+COPY /fonts ./usr/local/share/fonts
+RUN apt-get update; apt-get install -y fontconfig
+RUN fc-cache -f -v
+
 # set for base and all layer that inherit from it
 ENV NODE_ENV production
 
