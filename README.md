@@ -2,6 +2,10 @@
 
 This is a Discord bot originally created for the [Colin & Samir](https://discord.com/invite/colinandsamir) server that generates a representation of what a video would look like on YouTube given a title and a thumbnail.
 
+![demo prompt](./demo-prompt.png)
+
+![demo message](./demo-message.png)
+
 It is written using [`discord.js`](https://discordjs.guide) and Typescript. It is hosted on [`fly.io`](https://fly.io).
 
 If you'd like to see it in action, you can join the [development server](https://discord.gg/uTbz3UgmCR).
