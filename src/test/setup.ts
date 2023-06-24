@@ -8,3 +8,17 @@ afterEach(() => server.resetHandlers())
 
 // Clean up after the tests are finished.
 afterAll(() => server.close())
+
+vi.mock('@sentry/node', () => {
+  const getTransaction = vi.fn(() => {
+    const startChild = vi.fn(() => ({
+      finish: vi.fn(),
+    }))
+    return { startChild }
+  })
+  const getCurrentHub = vi.fn(() => {
+    const getScope = vi.fn(() => ({ getTransaction }))
+    return { getScope }
+  })
+  return { getCurrentHub }
+})
