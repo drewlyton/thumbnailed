@@ -4,6 +4,7 @@ import {
   CommandInteraction,
   SlashCommandBuilder,
 } from 'discord.js'
+import * as Sentry from '@sentry/node'
 import { Command } from './Command'
 import { generateThumbnail } from '../utils/generateThumbnail'
 import { getEnv } from '../getEnv'
@@ -24,6 +25,17 @@ const data = new SlashCommandBuilder()
   )
 
 async function execute(interaction: CommandInteraction) {
+  const transaction = Sentry.startTransaction({
+    name: 'generateThumbnail.execute',
+  })
+
+  // Set transaction on scope to associate with errors and get included span instrumentation
+  // If there's currently an unfinished transaction, it may be dropped
+  Sentry.getCurrentHub().configureScope(scope => scope.setSpan(transaction))
+
+  Sentry.setUser({ id: interaction.user.id })
+  // interaction.user.id
+  const spanValidation = transaction.startChild({ op: 'validation' }) // This function returns a Span
   const title = interaction.options.get('title')
   const thumbnail = interaction.options.get('thumbnail')
   if (
@@ -40,12 +52,17 @@ async function execute(interaction: CommandInteraction) {
   ) {
     throw Error('invalid thumbnail provided')
   }
+  spanValidation.finish()
   const generatedImage = await generateThumbnail(
     title.value?.toString() || '',
     interaction.user.username,
     thumbnail.attachment.url,
     interaction.user.displayAvatarURL() || ''
   )
+  const spanReply = transaction.startChild({
+    op: 'interaction.reply',
+    description: 'Sending back attachment to discord caller.',
+  })
   await interaction.reply({
     content: `Here's your thumbnail, ${interaction.user}!`,
     files: [
@@ -54,6 +71,8 @@ async function execute(interaction: CommandInteraction) {
       }),
     ],
   })
+  spanReply.finish()
+  transaction.finish()
 }
 
 export default { data, execute } as Command
