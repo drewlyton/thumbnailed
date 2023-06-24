@@ -6,6 +6,9 @@ const envSchema = z.object({
   SERVER_ID: z.string().nonempty(),
   CLIENT_ID: z.string().nonempty(),
   NODE_ENV: z.enum(['production', 'development']),
+  SENTRY_DSN: z.string(),
+  SENTRY_TRACES_SAMPLE_RATE: z.string(),
+  SENTRY_PROFILES_SAMPLE_RATE: z.string(),
 })
 dotenv.config()
 

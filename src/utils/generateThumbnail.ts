@@ -2,6 +2,7 @@ import { Canvas, Path2D, loadImage, GlobalFonts } from '@napi-rs/canvas'
 import { getTruncatedTitleLines } from './getTruncatedTitleLines'
 import { join } from 'path'
 import { randomNumber, daysOrHours } from './randomNumber'
+import * as Sentry from '@sentry/node'
 
 export async function generateThumbnail(
   title: string,
@@ -9,6 +10,13 @@ export async function generateThumbnail(
   thumbnailUrl: string,
   avatarUrl: string
 ) {
+  const transaction = Sentry.getCurrentHub()
+    .getScope()
+    .getTransaction() as Sentry.Transaction
+
+  const prepFonts = transaction.startChild({
+    op: 'prepping fonts',
+  }) // This function returns a Span
   GlobalFonts.registerFromPath(
     join(__dirname, '../../fonts/Roboto/Roboto-Bold.ttf'),
     'Title'
@@ -17,7 +25,9 @@ export async function generateThumbnail(
     join(__dirname, '../../fonts/Roboto/Roboto-Medium.ttf'),
     'Caption'
   )
+  prepFonts.finish() // Remember that only finished spans will be sent with the transaction
 
+  const initCanvasSpan = transaction.startChild({ op: 'initialize canvas' }) // This function returns a Span
   // Initialize canvas and set background color
   const canvas = new Canvas(388, 344)
   const context = canvas.getContext('2d')
@@ -28,6 +38,9 @@ export async function generateThumbnail(
   context.fill(backgroundPath)
 
   context.save()
+  initCanvasSpan.finish()
+
+  const drawImages = transaction.startChild({ op: 'draw images' }) // This function returns a Span
   // Draw clipping mask for thumbnail image
   const thumbnailMask = new Path2D()
   thumbnailMask.roundRect(13, 13, 360, 203, 8)
@@ -49,6 +62,10 @@ export async function generateThumbnail(
   context.drawImage(avatarImage, 13, 227, 36, 36)
   context.restore()
 
+  drawImages.finish()
+
+  const writeText = transaction.startChild({ op: 'writing text' }) // This function returns a Span
+
   // Write title text
   const [firstLine, secondLine] = getTruncatedTitleLines(title, canvas)
   context.font = titleStyle
@@ -69,8 +86,13 @@ export async function generateThumbnail(
     60,
     sectionPadding + 20 + 13 + 5
   )
+  writeText.finish()
 
-  return await canvas.encode('png')
+  const encode = transaction.startChild({ op: 'encode return' }) // This function returns a Span
+  const ret = await canvas.encode('png')
+  encode.finish()
+
+  return ret
 }
 export const titleStyle = '600 15px Title'
 const captionStyle = '13px Caption'
