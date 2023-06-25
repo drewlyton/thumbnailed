@@ -12,6 +12,7 @@ Sentry.init({
   integrations: [new CaptureConsole(), new ProfilingIntegration()],
   environment: process.env.NODE_ENV,
   release: 'thumbnailed@' + process.env.npm_package_version,
+  profilesSampleRate: 1.0,
 })
 
 const client = Object.assign(
