@@ -1,11 +1,15 @@
 import { Canvas } from '@napi-rs/canvas'
-import { titleStyle } from './generateThumbnail'
 
-export function getTruncatedTitleLines(title: string, canvas: Canvas) {
+export function getTruncatedTitleLines(
+  title: string,
+  canvas: Canvas,
+  titleStyle = '15px sans-serif',
+  widthLimitOffset = 60 - 13
+) {
   const context = canvas.getContext('2d')
   context.font = titleStyle
   context.fillStyle = '#ffffff'
-  const widthLimit = canvas.width - 60 - 13
+  const widthLimit = canvas.width - widthLimitOffset
 
   const firstLine = title.split(' ')
   let secondLine: string[] = []

@@ -28,8 +28,12 @@ export async function generateThumbnail(
   prepFonts.finish() // Remember that only finished spans will be sent with the transaction
 
   const initCanvasSpan = transaction.startChild({ op: 'initialize canvas' }) // This function returns a Span
+  const dimensionsAndPositions = scaleDimensionsAndPositions(2)
   // Initialize canvas and set background color
-  const canvas = new Canvas(388, 344)
+  const canvas = new Canvas(
+    dimensionsAndPositions.canvasWidth,
+    dimensionsAndPositions.canvasHeight
+  )
   const context = canvas.getContext('2d')
 
   const backgroundPath = new Path2D()
@@ -43,23 +47,51 @@ export async function generateThumbnail(
   const drawImages = transaction.startChild({ op: 'draw images' }) // This function returns a Span
   // Draw clipping mask for thumbnail image
   const thumbnailMask = new Path2D()
-  thumbnailMask.roundRect(13, 13, 360, 203, 8)
+  const thumbnailMaskProperties = dimensionsAndPositions.thumbnailMask
+  thumbnailMask.roundRect(
+    thumbnailMaskProperties.x,
+    thumbnailMaskProperties.y,
+    thumbnailMaskProperties.w,
+    thumbnailMaskProperties.h,
+    thumbnailMaskProperties.radii
+  )
   context.clip(thumbnailMask)
 
   // // draw thumbnail image to canvas
   const thumbnailImage = await loadImage(thumbnailUrl)
-  context.drawImage(thumbnailImage, 13, 13, 360, 203)
+  context.drawImage(
+    thumbnailImage,
+    thumbnailMaskProperties.x,
+    thumbnailMaskProperties.y,
+    thumbnailMaskProperties.w,
+    thumbnailMaskProperties.h
+  )
   context.restore()
 
   context.save()
   // Draw clipping mask for profile image
   const profileMask = new Path2D()
-  profileMask.arc(13 + 18, 227 + 18, 18, 0, 2 * Math.PI, true)
+  const profileMaskProperties = dimensionsAndPositions.profileMask
+  profileMask.arc(
+    profileMaskProperties.x,
+    profileMaskProperties.y,
+    profileMaskProperties.radius,
+    0,
+    2 * Math.PI,
+    true
+  )
   context.clip(profileMask)
 
   // Draw profile image to canvas
   const avatarImage = await loadImage(avatarUrl)
-  context.drawImage(avatarImage, 13, 227, 36, 36)
+  const profileImageProperties = dimensionsAndPositions.profileImage
+  context.drawImage(
+    avatarImage,
+    profileImageProperties.x,
+    profileImageProperties.y,
+    profileImageProperties.w,
+    profileImageProperties.h
+  )
   context.restore()
 
   drawImages.finish()
@@ -67,24 +99,38 @@ export async function generateThumbnail(
   const writeText = transaction.startChild({ op: 'writing text' }) // This function returns a Span
 
   // Write title text
-  const [firstLine, secondLine] = getTruncatedTitleLines(title, canvas)
-  context.font = titleStyle
+  const titleProperties = dimensionsAndPositions.title
+  const [firstLine, secondLine] = getTruncatedTitleLines(
+    title,
+    canvas,
+    titleStyle(titleProperties.fontSize),
+    titleProperties.x + profileImageProperties.x
+  )
+  context.font = titleStyle(titleProperties.fontSize)
   context.fillStyle = '#ffffff'
-  context.fillText(firstLine, 60, 227 + 16)
-  context.fillText(secondLine, 60, 227 + 16 + 22)
+  context.fillText(firstLine, titleProperties.x, titleProperties.y)
+  context.fillText(
+    secondLine,
+    titleProperties.x,
+    titleProperties.y + titleProperties.lineHeight
+  )
 
-  context.font = captionStyle
+  context.font = captionStyle(dimensionsAndPositions.name.fontSize)
   context.fillStyle = '#A9A9A9'
-  let sectionPadding = 248
-  if (secondLine !== '') sectionPadding += 26
-  context.fillText(name, 60, sectionPadding + 13 + 5)
+  const topPadding =
+    secondLine !== '' ? dimensionsAndPositions.title.bottomPadding : 0
+  context.fillText(
+    name,
+    dimensionsAndPositions.name.x,
+    dimensionsAndPositions.name.y + topPadding
+  )
   context.fillText(
     `${randomNumber(10, 400)}K views • ${randomNumber(
       2,
       10
     )} ${daysOrHours()} ago`,
-    60,
-    sectionPadding + 20 + 13 + 5
+    dimensionsAndPositions.views.x,
+    dimensionsAndPositions.views.y + topPadding
   )
   writeText.finish()
 
@@ -94,5 +140,45 @@ export async function generateThumbnail(
 
   return ret
 }
-export const titleStyle = '600 15px Title'
-const captionStyle = '13px Caption'
+export const titleStyle = (fontSize: number) => `600 ${fontSize}px Title`
+const captionStyle = (fontSize: number) => `${fontSize}px Caption`
+
+const scaleDimensionsAndPositions = (scale = 1) => ({
+  canvasWidth: scale * 388,
+  canvasHeight: scale * 344,
+  thumbnailMask: {
+    x: scale * 13,
+    y: scale * 13,
+    w: scale * 360,
+    h: scale * 203,
+    radii: scale * 8,
+  },
+  profileMask: {
+    x: scale * (13 + 18),
+    y: scale * (227 + 18),
+    radius: scale * 18,
+  },
+  profileImage: {
+    x: scale * 13,
+    y: scale * 227,
+    w: scale * 36,
+    h: scale * 36,
+  },
+  title: {
+    fontSize: scale * 15,
+    lineHeight: scale * 22,
+    x: scale * 60,
+    y: scale * (227 + 16),
+    bottomPadding: scale * 26,
+  },
+  name: {
+    fontSize: scale * 13,
+    x: scale * 60,
+    y: scale * (248 + 13 + 5),
+  },
+  views: {
+    fontSize: scale * 13,
+    x: scale * 60,
+    y: scale * (248 + 13 + 5 + 20),
+  },
+})
