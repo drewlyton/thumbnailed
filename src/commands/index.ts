@@ -1,3 +1,3 @@
-import Thumbailed from './thumbnailed'
+import thumbnailed from './thumbnailed'
 
-export const Commands = [Thumbailed]
+export const Commands = [thumbnailed]

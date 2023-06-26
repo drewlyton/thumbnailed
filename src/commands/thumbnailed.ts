@@ -11,7 +11,7 @@ import { getEnv } from '../getEnv'
 
 const data = new SlashCommandBuilder()
   .setName(
-    getEnv().NODE_ENV === 'production' ? 'thumbailed' : 'thumbnailed-dev'
+    getEnv().NODE_ENV === 'production' ? 'thumbnailed' : 'thumbnailed-dev'
   )
   .setDescription('Replies with a mockup of your title and thumbnail')
   .addStringOption(option =>
