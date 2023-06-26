@@ -23,6 +23,11 @@ const data = new SlashCommandBuilder()
       .setDescription('The video thumbnail')
       .setRequired(true)
   )
+  .addUserOption(option => {
+    return option
+      .setName('creator')
+      .setDescription('The video creator (defaults to you if left blank)')
+  })
 
 async function execute(interaction: CommandInteraction) {
   const transaction = Sentry.startTransaction({
@@ -36,6 +41,7 @@ async function execute(interaction: CommandInteraction) {
   Sentry.setUser({ id: interaction.user.id })
   // interaction.user.id
   const spanValidation = transaction.startChild({ op: 'validation' }) // This function returns a Span
+  // Required Variables
   const title = interaction.options.get('title')
   const thumbnail = interaction.options.get('thumbnail')
   if (
@@ -52,12 +58,22 @@ async function execute(interaction: CommandInteraction) {
   ) {
     throw Error('invalid thumbnail provided')
   }
+  // Not required
+  const creatorOption = interaction.options.get('creator')
+  let creator = interaction.user
+  if (
+    creatorOption &&
+    creatorOption.type === ApplicationCommandOptionType.User &&
+    creatorOption.user
+  ) {
+    creator = creatorOption.user
+  }
   spanValidation.finish()
   const generatedImage = await generateThumbnail(
     title.value?.toString() || '',
-    interaction.user.username,
+    creator.username,
     thumbnail.attachment.url,
-    interaction.user.displayAvatarURL() || ''
+    creator.displayAvatarURL() || ''
   )
   const spanReply = transaction.startChild({
     op: 'interaction.reply',
@@ -67,7 +83,7 @@ async function execute(interaction: CommandInteraction) {
     content: `Here's your thumbnail, ${interaction.user}!`,
     files: [
       new AttachmentBuilder(generatedImage, {
-        name: `${interaction.user.username}-thumbnail-${Date.now()}.png`,
+        name: `${creator.username}-thumbnail-${Date.now()}.png`,
       }),
     ],
   })
