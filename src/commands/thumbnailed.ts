@@ -8,6 +8,7 @@ import * as Sentry from '@sentry/node'
 import { Command } from './Command'
 import { generateThumbnail } from '../utils/generateThumbnail'
 import { getEnv } from '../getEnv'
+import { allowedContentTypes } from '../utils/allowedContentTypes'
 
 const data = new SlashCommandBuilder()
   .setName(
@@ -34,7 +35,6 @@ async function execute(interaction: CommandInteraction) {
   Sentry.getCurrentHub().configureScope(scope => scope.setSpan(transaction))
 
   Sentry.setUser({ id: interaction.user.id })
-  // interaction.user.id
   const spanValidation = transaction.startChild({ op: 'validation' }) // This function returns a Span
   const title = interaction.options.get('title')
   const thumbnail = interaction.options.get('thumbnail')
@@ -43,14 +43,23 @@ async function execute(interaction: CommandInteraction) {
     title.type !== ApplicationCommandOptionType.String ||
     !title.value
   ) {
-    throw Error('invalid title provided')
+    await interaction.reply({
+      ephemeral: true,
+      content: `Hey ${interaction.user} 👋, please check your title and try again.`,
+    })
+    return
   }
   if (
     !thumbnail ||
     thumbnail.type !== ApplicationCommandOptionType.Attachment ||
-    !thumbnail.attachment
+    !thumbnail.attachment ||
+    !allowedContentTypes.includes(thumbnail.attachment.contentType || '')
   ) {
-    throw Error('invalid thumbnail provided')
+    await interaction.reply({
+      ephemeral: true,
+      content: `Hey ${interaction.user} 👋, please check your thumbnail is a '.jpg', '.jpeg', '.png' or '.gif' and try again.`,
+    })
+    return
   }
   spanValidation.finish()
   const generatedImage = await generateThumbnail(
