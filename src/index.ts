@@ -1,4 +1,4 @@
-import { Client, Collection, GatewayIntentBits } from 'discord.js'
+import { Client, Collection, GatewayIntentBits, Options } from 'discord.js'
 import * as Sentry from '@sentry/node'
 import { CaptureConsole } from '@sentry/integrations'
 // import { ProfilingIntegration } from '@sentry/profiling-node'
@@ -16,7 +16,32 @@ Sentry.init({
 })
 
 const client = Object.assign(
-  new Client({ intents: [GatewayIntentBits.Guilds] }),
+  new Client({
+    intents: [GatewayIntentBits.Guilds],
+    makeCache: Options.cacheWithLimits({
+      ...Options.DefaultMakeCacheSettings,
+      ApplicationCommandManager: 0,
+      AutoModerationRuleManager: 0,
+      BaseGuildEmojiManager: 0,
+      GuildBanManager: 0,
+      GuildEmojiManager: 0,
+      GuildForumThreadManager: 0,
+      GuildInviteManager: 0,
+      GuildMemberManager: 0,
+      GuildScheduledEventManager: 0,
+      GuildStickerManager: 0,
+      GuildTextThreadManager: 0,
+      MessageManager: 0,
+      PresenceManager: 0,
+      ReactionManager: 0,
+      ReactionUserManager: 0,
+      StageInstanceManager: 0,
+      ThreadManager: 0,
+      ThreadMemberManager: 0,
+      UserManager: 0,
+      VoiceStateManager: 0,
+    }),
+  }),
   { commands: new Collection() }
 )
 
