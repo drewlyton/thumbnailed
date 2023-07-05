@@ -42,12 +42,14 @@
   },
   "devDependencies": {
     "@types/jest-image-snapshot": "^6.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.27.0",
     "eslint-config-custom": "workspace:*",
     "jest-image-snapshot": "^6.1.0",
     "msw": "^1.2.2",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
+    "tsconfig": "workspace:*",
     "vite": "^3.2.3",
     "vite-tsconfig-paths": "^3.5.2",
     "vitest": "^0.25.2"
