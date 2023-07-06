@@ -1,7 +1,7 @@
 # base node image
 FROM node:20-bullseye-slim as base
 
-COPY /fonts ./usr/share/fonts
+COPY /apps/discord/fonts ./usr/share/fonts
 RUN apt-get update; apt-get install -y fontconfig
 RUN fc-cache -f -v
 
