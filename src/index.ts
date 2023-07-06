@@ -1,7 +1,6 @@
 import { Client, Collection, GatewayIntentBits, Options } from 'discord.js'
 import * as Sentry from '@sentry/node'
 import { CaptureConsole } from '@sentry/integrations'
-// import { ProfilingIntegration } from '@sentry/profiling-node'
 
 import { Commands } from './commands'
 import { getEnv } from './getEnv'
@@ -41,6 +40,17 @@ const client = Object.assign(
       UserManager: 0,
       VoiceStateManager: 0,
     }),
+    sweepers: {
+      ...Options.DefaultSweeperSettings,
+      messages: {
+        interval: 3600, // Every hour...
+        lifetime: 1800, // Remove messages older than 30 minutes.
+      },
+      users: {
+        interval: 3600, // Every hour...
+        filter: () => user => user.bot && user.id !== client.user.id, // Remove all bots.
+      },
+    },
   }),
   { commands: new Collection() }
 )
