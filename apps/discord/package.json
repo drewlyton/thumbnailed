@@ -1,7 +1,7 @@
 {
   "name": "@thumbnailed/discord",
-  "version": "0.0.1",
-  "description": "A new NPM package",
+  "version": "0.0.2",
+  "description": "Thumbnailed is a discord utility that allows for rapid prototyping of YouTube Thumbnails.",
   "keywords": [
     "node",
     "typescript",
