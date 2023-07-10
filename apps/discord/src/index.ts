@@ -46,10 +46,10 @@ const client = Object.assign(
         interval: 3600, // Every hour...
         lifetime: 1800, // Remove messages older than 30 minutes.
       },
-      users: {
-        interval: 3600, // Every hour...
-        filter: () => user => user.bot && user.id !== client.user.id, // Remove all bots.
-      },
+      // users: { //commented out due to some tsc weirdness, the client is not yet available here.
+      //   interval: 3600, // Every hour...
+      //   filter: () => user => user.bot && user.id !== client.user.id, // Remove all bots.
+      // },
     },
   }),
   { commands: new Collection() }
