@@ -21,20 +21,8 @@ jobs:
     name: ⬣ ESLint
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
-
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: "pnpm"
-
-      - name: 📥 Download deps
-        run: pnpm install
+      - name: 🏗 Setup step
+        uses: ./.github/actions/setup
 
       - name: 🔬 Lint
         run: pnpm discord lint
@@ -43,20 +31,8 @@ jobs:
     name: ʦ TypeScript
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
-
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: "pnpm"
-
-      - name: 📥 Download deps
-        run: pnpm install
+      - name: 🏗 Setup step
+        uses: ./.github/actions/setup
 
       - name: 🔎 Type check
         run: pnpm discord typecheck --if-present
@@ -65,20 +41,8 @@ jobs:
     name: ⚡ Vitest
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
-
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: "pnpm"
-
-      - name: 📥 Download deps
-        run: pnpm install
+      - name: 🏗 Setup step
+        uses: ./.github/actions/setup
 
       - name: ⚡ Run vitest
         run: pnpm discord test -- -u
