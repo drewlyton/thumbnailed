@@ -1,5 +1,6 @@
+/** @type {import("prettier").Options} */
 module.exports = {
-  allowParens: 'avoid',
-  semi: true,
-  singleQuote: false,
-}
+  plugins: [require("prettier-plugin-tailwindcss")],
+  singleQuote: true,
+  semi: false,
+};
