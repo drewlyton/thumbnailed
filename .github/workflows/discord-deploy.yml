@@ -126,7 +126,8 @@ jobs:
       - name: 🐳 Docker build
         uses: docker/build-push-action@v3
         with:
-          context: ./apps/discord
+          context: .
+          file: apps/discord/Dockerfile
           push: true
           tags: registry.fly.io/${{ steps.thumbnailed.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}
           build-args: |
