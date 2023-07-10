@@ -28,6 +28,7 @@
     "deploy": "cross-env NODE_ENV=development ts-node ./src/commands/deploy-commands.ts",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "typecheck": "tsc --noEmit",
     "test": "vitest"
   },
   "dependencies": {
