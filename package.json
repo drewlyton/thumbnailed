@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "discord": "pnpm --filter @thumbnailed/discord"
+    "discord": "pnpm --filter @thumbnailed/discord",
+    "docker:discord": "DOCKER_BUILDKIT=1 docker buildx bake --progress=plain --no-cache discord"
   },
   "keywords": [],
   "author": "",
