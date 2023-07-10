@@ -26,7 +26,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: 🔬 Lint
-        run: pnpm discord lint
+        run: pnpm lint
 
   typecheck:
     name: ʦ TypeScript
@@ -37,7 +37,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: 🔎 Type check
-        run: pnpm discord typecheck --if-present
+        run: pnpm typecheck --if-present
 
   vitest:
     name: ⚡ Vitest
@@ -48,7 +48,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: ⚡ Run vitest
-        run: pnpm discord test -- -u
+        run: pnpm test -- -u
 
   build:
     name: 🐳 Build
