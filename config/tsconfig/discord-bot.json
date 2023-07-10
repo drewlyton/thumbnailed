@@ -4,7 +4,6 @@
     "module": "CommonJS",
     "types": ["vitest/globals"],
     "allowJs": true,
-    "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
