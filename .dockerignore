@@ -1,7 +1,23 @@
-/node_modules
+# Files
+.env
+.env.*
+README.md
+.git
+.gitignore
+npm-debug.log
+.dockerignore
+Dockerfile
+docker-compose
+LICENSE.md
+
+# Directories
+node_modules
+test
+dist
+.github
+.vscode
+
 *.log
 .DS_Store
-.env
-/.cache
-/public/dist
-/dist
+.cache
+public/dist

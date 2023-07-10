@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  discord:
+    build:
+      context: .
+      dockerfile: apps/discord/Dockerfile
+      target: deploy
+    volumes:
+      - ./apps/discord:/app
+      - /app/node_modules

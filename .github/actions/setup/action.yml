@@ -1,0 +1,26 @@
+name: 🏗️ Setup
+description: Prepare and install everything for the monorepo
+
+runs:
+  using: composite
+  steps:
+    - name: 🛑 Cancel Previous Runs
+      uses: styfle/cancel-workflow-action@0.11.0
+
+    - name: ⬇️ Checkout repo
+      uses: actions/checkout@v3
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
+    - name: ⎔ Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+        cache: "pnpm"
+
+    - name: 📥 Download deps
+      shell: bash
+      run: pnpm install
+
+    
