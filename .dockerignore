@@ -1,0 +1,23 @@
+# Files
+.env
+.env.*
+README.md
+.git
+.gitignore
+npm-debug.log
+.dockerignore
+Dockerfile
+docker-compose
+LICENSE.md
+
+# Directories
+node_modules
+test
+dist
+.github
+.vscode
+
+*.log
+.DS_Store
+.cache
+public/dist
