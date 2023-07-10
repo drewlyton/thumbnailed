@@ -27,6 +27,7 @@ ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 COPY --from=pruned /app/pruned/dist dist
 COPY --from=pruned /app/pruned/node_modules node_modules
+COPY --from=pruned /app/pruned/package.json package.json
 COPY --from=pruned /app/apps/discord/fonts /app/fonts
 COPY --from=pruned /app/apps/discord/start.sh /app/start.sh
 
