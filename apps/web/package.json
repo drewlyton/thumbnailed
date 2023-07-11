@@ -11,6 +11,7 @@
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "lint:repo": "npm run lint -- --config .eslintrc.repo.js",
     "db:setup": "prisma generate && prisma migrate deploy && prisma db seed",
+    "db:generate": "prisma generate",
     "start": "remix-serve build",
     "start:mocks": "binode --require ./mocks -- @remix-run/serve:remix-serve build",
     "test": "vitest",
@@ -21,6 +22,10 @@
     "/node_modules",
     "/build",
     "/public/build"
+  ],
+  "files": [
+    "build",
+    "public"
   ],
   "dependencies": {
     "@prisma/client": "^4.16.1",
