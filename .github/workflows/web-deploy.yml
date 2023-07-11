@@ -1,5 +1,4 @@
 name: 🚀🕸️ Web Deploy
-
 on:
   push:
     branches:
