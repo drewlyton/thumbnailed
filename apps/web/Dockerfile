@@ -11,8 +11,8 @@ RUN pnpm install
 
 # Build the bot
 FROM deps as build
-RUN pnpm -r build
 RUN pnpm web db:generate
+RUN pnpm -r build
 
 # Setup production node_modules
 FROM build as pruned
@@ -38,5 +38,5 @@ COPY --from=pruned /myapp/apps/web/node_modules/@prisma /myapp/node_modules/@pri
 COPY --from=pruned /myapp/apps/web/prisma /myapp/prisma
 
 RUN ["chmod", "+x", "start.sh"]
-
+EXPOSE 8080
 ENTRYPOINT [ "./start.sh" ]
