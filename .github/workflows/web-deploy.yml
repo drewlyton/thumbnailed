@@ -139,6 +139,6 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: superfly/flyctl-actions@1.4
         with:
-          args: deploy --config ./apps/web/fly.toml --dockerfile ./apps/web/Dockerfile --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
+          args: 'deploy --config ./apps/web/fly.toml --dockerfile ./apps/web/Dockerfile --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
