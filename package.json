@@ -5,7 +5,8 @@
   "scripts": {
     "discord": "pnpm --filter @thumbnailed/discord",
     "web": "pnpm --filter @thumbnailed/web",
-    "docker:discord": "DOCKER_BUILDKIT=1 docker buildx bake --progress=plain --no-cache discord"
+    "docker:discord": "DOCKER_BUILDKIT=1 docker buildx bake --progress=plain --no-cache discord",
+    "docker:web": "DOCKER_BUILDKIT=1 docker buildx bake --progress=plain --no-cache web"
   },
   "keywords": [],
   "author": "",
