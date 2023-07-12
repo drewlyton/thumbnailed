@@ -14,6 +14,7 @@
     "db:generate": "pnpx prisma generate",
     "start": "remix-serve build",
     "start:mocks": "binode --require ./mocks -- @remix-run/serve:remix-serve build",
+    "g:component": "pnpx shadcn-ui@latest add",
     "test": "vitest",
     "typecheck": "prisma generate && tsc",
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run"
@@ -29,15 +30,21 @@
   ],
   "dependencies": {
     "@prisma/client": "^5.0.0",
+    "@radix-ui/react-slot": "^1.0.2",
     "@remix-run/css-bundle": "^1.18.1",
     "@remix-run/node": "^1.18.1",
     "@remix-run/react": "^1.18.1",
     "@remix-run/serve": "^1.18.1",
     "bcryptjs": "^2.4.3",
+    "class-variance-authority": "^0.6.1",
+    "clsx": "^1.2.1",
     "isbot": "^3.6.12",
+    "lucide-react": "^0.259.0",
     "prisma": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "tailwind-merge": "^1.13.2",
+    "tailwindcss-animate": "^1.0.6",
     "tiny-invariant": "^1.3.1"
   },
   "devDependencies": {
