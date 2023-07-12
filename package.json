@@ -13,8 +13,8 @@
   "license": "MIT",
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
-    "prettier": "latest",
-    "prettier-plugin-tailwindcss": "latest",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.4.0",
     "typescript": "^5.0.4"
   }
 }
