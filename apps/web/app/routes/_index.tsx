@@ -10,18 +10,18 @@ export default function Index() {
       <NavBar />
       <main className="flex flex-grow flex-col justify-center px-3 pb-14">
         <div className="flex flex-col gap-3 sm:items-center">
-          <h1 className="flex flex-col text-5xl font-extrabold tracking-wide drop-shadow-xl sm:flex-row">
+          <h1 className="flex flex-col text-5xl font-extrabold tracking-wide drop-shadow-xl sm:flex-row lg:text-7xl">
             <div className="mb-3 sm:mb-0 sm:mr-3">Preview</div>
             <div className="inline-flex items-center text-[#FF0000]">
               <img
                 src="/youtube-logo.png"
                 alt="YouTube logo"
-                className="flex-0 mr-3 w-12 sm:mr-2"
+                className="flex-0 mr-3 w-12 sm:mr-2 lg:w-16"
               />
               <span>thumbnails</span>
             </div>
           </h1>
-          <h2 className="flex flex-col text-5xl font-bold  drop-shadow-xl sm:flex-row">
+          <h2 className="flex flex-col text-5xl font-bold drop-shadow-xl  sm:flex-row lg:text-7xl">
             <div className="mb-3 mr-3 lowercase tracking-wider sm:mb-0">
               within
             </div>
@@ -29,20 +29,25 @@ export default function Index() {
               <img
                 src="/discord-logo.png"
                 alt="Discord logo"
-                className="mr-3 w-9 sm:w-9"
+                className="mr-3 w-9 sm:w-9 lg:w-16"
               />
               <span>discord</span>
             </span>
           </h2>
         </div>
         <div className="mt-8 flex w-full flex-col gap-4 sm:flex-row sm:justify-center">
-          <Button className="font-mono" asChild>
+          <Button className="font-mono" asChild size={'lg'}>
             <Link to={'https://discord.gg/uTbz3UgmCR'} target="_blank">
               <span className="mr-2 text-lg">/</span>
               <span>Try it</span>
             </Link>
           </Button>
-          <Button variant={'secondary'} className="font-mono" asChild>
+          <Button
+            variant={'secondary'}
+            size={'lg'}
+            className="font-mono"
+            asChild
+          >
             <Link
               to={
                 'https://discord.com/api/oauth2/authorize?client_id=1118996288579571843&permissions=277025442880&scope=bot%20applications.commands'
