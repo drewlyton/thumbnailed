@@ -21,7 +21,7 @@ export const meta: V2_MetaFunction = () => {
   const title = 'Thumbnailed'
   const description =
     'A Discord bot that allows creators to preview YouTube thumbnails.'
-  const image = 'hero-image.png'
+  const image = 'https://thumbnailed.drewis.cool/hero-image.png'
   return [
     { title: 'Thumbnailed' },
     {
