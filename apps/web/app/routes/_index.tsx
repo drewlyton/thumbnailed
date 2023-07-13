@@ -1,8 +1,5 @@
-import type { V2_MetaFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
 import { Button } from '~/components/ui/button'
-
-export const meta: V2_MetaFunction = () => [{ title: 'Thumbnailed' }]
 
 export default function Index() {
   return (

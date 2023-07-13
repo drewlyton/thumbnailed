@@ -23,6 +23,7 @@ export const meta: V2_MetaFunction = () => {
     'A Discord bot that allows creators to preview YouTube thumbnails.'
   const image = 'hero-image.png'
   return [
+    { title: 'Thumbnailed' },
     {
       property: 'og:title',
       content: title,
