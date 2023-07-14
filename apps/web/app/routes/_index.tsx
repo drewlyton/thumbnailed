@@ -5,7 +5,7 @@ export default function Index() {
   return (
     <>
       <NavBar />
-      <main className="flex flex-grow flex-col justify-center px-3 pb-14">
+      <main className="flex flex-grow flex-col justify-center px-3">
         <div className="flex flex-col gap-3 sm:items-center">
           <h1 className="flex flex-col text-5xl font-extrabold tracking-wide drop-shadow-xl sm:flex-row lg:text-7xl">
             <div className="mb-3 sm:mb-0 sm:mr-3">Preview</div>
